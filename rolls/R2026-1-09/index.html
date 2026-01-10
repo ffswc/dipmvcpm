@@ -15,9 +15,9 @@
     }
 
     h1 {
-      font-size: 18px;
+      font-size: 16px;
       text-align: center;
-      margin: 12px 0;
+      margin: 10px 0;
       font-weight: normal;
       letter-spacing: 1px;
     }
@@ -30,10 +30,39 @@
 
     .gallery img {
       width: 100%;
-      height: auto;
       display: block;
       border-radius: 2px;
       background: #222;
+      cursor: pointer;
+    }
+
+    /* 全屏查看层 */
+    .viewer {
+      position: fixed;
+      inset: 0;
+      background: #000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+    }
+
+    .viewer img {
+      max-width: 100%;
+      max-height: 100%;
+    }
+
+    .viewer.active {
+      display: flex;
+    }
+
+    .hint {
+      position: absolute;
+      bottom: 12px;
+      width: 100%;
+      text-align: center;
+      font-size: 12px;
+      color: #888;
     }
   </style>
 </head>
@@ -43,19 +72,70 @@
 
   <div class="gallery" id="gallery"></div>
 
+  <!-- 全屏查看 -->
+  <div class="viewer" id="viewer">
+    <img id="viewerImg">
+    <div class="hint">点击任意位置关闭 · 左右滑动切换</div>
+  </div>
+
   <script>
-    
-    const TOTAL = 38;
+    // ⚠️ 改成你这一卷的真实张数
+    const TOTAL = 36;
 
     const gallery = document.getElementById('gallery');
+    const viewer = document.getElementById('viewer');
+    const viewerImg = document.getElementById('viewerImg');
 
+    let current = 0;
+
+    // 生成缩略图
     for (let i = 1; i <= TOTAL; i++) {
       const num = String(i).padStart(3, '0');
       const img = document.createElement('img');
       img.src = `images/${num}.jpg`;
       img.loading = 'lazy';
+      img.dataset.index = i - 1;
       gallery.appendChild(img);
     }
+
+    const images = document.querySelectorAll('.gallery img');
+
+    // 打开查看
+    images.forEach(img => {
+      img.addEventListener('click', () => {
+        current = Number(img.dataset.index);
+        showImage();
+        viewer.classList.add('active');
+      });
+    });
+
+    function showImage() {
+      const num = String(current + 1).padStart(3, '0');
+      viewerImg.src = `images/${num}.jpg`;
+    }
+
+    // 点击关闭
+    viewer.addEventListener('click', () => {
+      viewer.classList.remove('active');
+    });
+
+    // 手机左右滑动
+    let startX = 0;
+
+    viewer.addEventListener('touchstart', e => {
+      startX = e.touches[0].clientX;
+    });
+
+    viewer.addEventListener('touchend', e => {
+      const endX = e.changedTouches[0].clientX;
+      const diff = endX - startX;
+
+      if (Math.abs(diff) > 50) {
+        if (diff < 0 && current < TOTAL - 1) current++;
+        if (diff > 0 && current > 0) current--;
+        showImage();
+      }
+    });
   </script>
 </body>
 </html>
