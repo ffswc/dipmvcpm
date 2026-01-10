@@ -15,6 +15,10 @@
     }
 
     h1 {
+      <div class="frame" id="frame"></div>
+      <p class="intro">Tap to view · Swipe to browse</p>
+<p class="meta">Kodak Vision3 250D AHU · Minolta X700 · 50mm1.4</p>
+
       font-size: 16px;
       text-align: center;
       margin: 10px 0;
@@ -65,6 +69,58 @@
       color: #888;
     }
   </style>
+  /* 缩略图轻反馈（②） */
+.gallery img {
+  transition: transform 0.15s ease, opacity 0.15s ease;
+  background: #1a1a1a;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.4);
+  -webkit-touch-callout: none; /* ⑪ */
+  user-select: none;
+}
+
+.gallery img:hover {
+  transform: scale(1.02);
+  opacity: 0.9;
+}
+
+/* 顶部提示（⑧） */
+.intro {
+  text-align: center;
+  font-size: 11px;
+  color: #666;
+  margin: 6px 0 4px;
+}
+
+/* 拍摄信息（⑤） */
+.meta {
+  text-align: center;
+  font-size: 12px;
+  color: #777;
+  margin-bottom: 10px;
+}
+
+/* 全屏查看优化（③④⑩） */
+.viewer {
+  background: #0b0b0b; /* 暗房灰 */
+}
+
+.viewer.active {
+  cursor: none; /* 沉浸模式（⑩） */
+}
+
+.viewer img {
+  box-shadow: 0 0 30px rgba(0,0,0,0.6);
+}
+
+/* 帧号显示（③） */
+.frame {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-size: 12px;
+  color: #aaa;
+}
+
 </head>
 
 <body>
@@ -110,6 +166,9 @@
     });
 
     function showImage() {
+      document.getElementById('frame').textContent =
+  String(current + 1).padStart(3, '0');
+
       const num = String(current + 1).padStart(3, '0');
       viewerImg.src = `images/${num}.jpg`;
     }
