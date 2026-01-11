@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Film Archive</title>
+
+<style>
+body {
+  margin: 0;
+  background: #111;
+  color: #ddd;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+/* 标题 */
+h1 {
+  text-align: center;
+  font-size: 18px;
+  margin: 14px 0 4px;
+  font-weight: 500;
+}
+
+/* 提示 */
+.intro {
+  text-align: center;
+  font-size: 11px;
+  color: #777;
+  margin-bottom: 4px;
+}
+
+/* 拍摄信息 */
+.meta {
+  text-align: center;
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 12px;
+}
+
+/* 缩略图网格 */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 6px;
+  padding: 6px;
+}
+
+.gallery img {
+  width: 100%;
+  display: block;
+  cursor: pointer;
+  background: #1a1a1a;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.4);
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+
+.gallery img:hover {
+  transform: scale(1.02);
+  opacity: 0.9;
+}
+
+/* 全屏查看器 */
+.viewer {
+  position: fixed;
+  inset: 0;
+  background: #0b0b0b;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.viewer.active {
+  display: flex;
+  cursor: none;
+}
+
+.viewer img {
+  max-width: 95%;
+  max-height: 95%;
+  box-shadow: 0 0 30px rgba(0,0,0,0.6);
+}
+
+/* 帧号 */
+.frame {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-size: 12px;
+  color: #aaa;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Film Archive</h1>
+<p class="intro">Tap to view · Swipe / Click to browse</p>
+<p class="meta">Kodak Vision3 250D AHU · Minolta X700 · 50mm1.4</p>
+
+<div class="gallery" id="gallery"></div>
+
+<div class="viewer" id="viewer">
+  <div class="frame" id="frame"></div>
+  <img id="viewerImg">
+</div>
+
+<script>
+/* ===== 修改这里：你的照片列表 ===== */
+const images = [
+  "images/001.jpg",
+  "images/002.jpg",
+  "images/003.jpg",
+  "images/004.jpg",
+  "images/005.jpg",
+  "images/006.jpg",
+  "images/007.jpg",
+  "images/008.jpg",
+  "images/009.jpg",
+  "images/010.jpg",
+  "images/011.jpg",
+  "images/012.jpg",
+  "images/013.jpg",
+  "images/014.jpg",
+  "images/015.jpg",
+  "images/016.jpg",
+  "images/017.jpg",
+  "images/018.jpg",
+  "images/019.jpg",
+  "images/020.jpg",
+  "images/021.jpg",
+  "images/022.jpg",
+  "images/023.jpg",
+  "images/024.jpg",
+  "images/025.jpg",
+  "images/026.jpg",
+  "images/027.jpg",
+  "images/028.jpg",
+  "images/029.jpg",
+  "images/030.jpg",
+  "images/031.jpg",
+  "images/032.jpg",
+  "images/033.jpg",
+  "images/034.jpg",
+  "images/035.jpg",
+  "images/036.jpg",
+
+
+  // 继续加
+];
+
+const gallery = document.getElementById("gallery");
+const viewer = document.getElementById("viewer");
+const viewerImg = document.getElementById("viewerImg");
+const frame = document.getElementById("frame");
+
+let current = 0;
+
+/* 生成缩略图 */
+images.forEach((src, i) => {
+  const img = document.createElement("img");
+  img.src = src;
+  img.loading = "lazy";
+  img.onerror = () => img.style.opacity = 0.3;
+  img.onclick = () => showImage(i);
+  gallery.appendChild(img);
+});
+
+/* 显示图片 */
+function showImage(i) {
+  current = i;
+  viewerImg.src = images[i];
+  frame.textContent = String(i + 1).padStart(3, "0");
+  viewer.classList.add("active");
+}
+
+/* 点击左右切换 / 点击关闭 */
+viewer.onclick = () => viewer.classList.remove("active");
+
+document.addEventListener("keydown", e => {
+  if (!viewer.classList.contains("active")) return;
+  if (e.key === "ArrowRight") showImage((current + 1) % images.length);
+  if (e.key === "ArrowLeft") showImage((current - 1 + images.length) % images.length);
+  if (e.key === "Escape") viewer.classList.remove("active");
+});
+</script>
+
+</body>
+</html>
