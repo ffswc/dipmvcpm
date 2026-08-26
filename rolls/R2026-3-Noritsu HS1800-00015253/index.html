@@ -13,26 +13,9 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
-h1 {
-  text-align: center;
-  font-size: 18px;
-  margin: 14px 0 4px;
-  font-weight: 500;
-}
-
-.intro {
-  text-align: center;
-  font-size: 11px;
-  color: #777;
-  margin-bottom: 4px;
-}
-
-.meta {
-  text-align: center;
-  font-size: 12px;
-  color: #666;
-  margin-bottom: 12px;
-}
+h1 { text-align: center; font-size: 18px; margin: 14px 0 4px; font-weight: 500; }
+.intro { text-align: center; font-size: 11px; color: #777; margin-bottom: 4px; }
+.meta { text-align: center; font-size: 12px; color: #666; margin-bottom: 12px; }
 
 .gallery {
   display: grid;
@@ -52,10 +35,7 @@ h1 {
   -webkit-touch-callout: none;
 }
 
-.gallery img:hover {
-  transform: scale(1.02);
-  opacity: 0.9;
-}
+.gallery img:hover { transform: scale(1.02); opacity: 0.9; }
 
 .viewer {
   position: fixed;
@@ -67,33 +47,11 @@ h1 {
   z-index: 999;
 }
 
-.viewer.active {
-  display: flex;
-  cursor: none;
-}
+.viewer.active { display: flex; cursor: none; }
+.viewer img { max-width: 95%; max-height: 95%; box-shadow: 0 0 30px rgba(0,0,0,0.6); }
 
-.viewer img {
-  max-width: 95%;
-  max-height: 95%;
-  box-shadow: 0 0 30px rgba(0,0,0,0.6);
-}
-
-.frame {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  font-size: 12px;
-  color: #aaa;
-}
-
-.back-link {
-  position: absolute;
-  top: 12px;
-  left: 12px;
-  font-size: 12px;
-  color: #777;
-  text-decoration: none;
-}
+.frame { position: absolute; top: 12px; right: 12px; font-size: 12px; color: #aaa; }
+.back-link { position: absolute; top: 12px; left: 12px; font-size: 12px; color: #777; text-decoration: none; }
 .back-link:hover { color: #ccc; }
 </style>
 </head>
@@ -109,40 +67,12 @@ h1 {
 
 <div class="viewer" id="viewer">
   <div class="frame" id="frame"></div>
-  <img id="viewerImg">
+  <img id="viewerImg" decoding="async">
 </div>
 
 <script>
 const images = [
-  "images/000152530001.jpg",
-  "images/000152530002.jpg",
-  "images/000152530003.jpg",
-  "images/000152530004.jpg",
-  "images/000152530005.jpg",
-  "images/000152530006.jpg",
-  "images/000152530007.jpg",
-  "images/000152530008.jpg",
-  "images/000152530009.jpg",
-  "images/000152530010.jpg",
-  "images/000152530011.jpg",
-  "images/000152530012.jpg",
-  "images/000152530013.jpg",
-  "images/000152530014.jpg",
-  "images/000152530015.jpg",
-  "images/000152530016.jpg",
-  "images/000152530017.jpg",
-  "images/000152530018.jpg",
-  "images/000152530019.jpg",
-  "images/000152530020.jpg",
-  "images/000152530021.jpg",
-  "images/000152530022.jpg",
-  "images/000152530023.jpg",
-  "images/000152530024.jpg",
-  "images/000152530025.jpg",
-  "images/000152530026.jpg",
-  "images/000152530027.jpg",
-  "images/000152530028.jpg",
-  "images/000152530029.jpg"
+
 ];
 
 const gallery = document.getElementById("gallery");
@@ -156,6 +86,7 @@ images.forEach((src, i) => {
   const img = document.createElement("img");
   img.src = src;
   img.loading = "lazy";
+  img.decoding = "async";
   img.onerror = () => img.style.opacity = 0.3;
   img.onclick = () => showImage(i);
   gallery.appendChild(img);
