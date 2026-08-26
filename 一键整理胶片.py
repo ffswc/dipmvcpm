@@ -5,67 +5,195 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ROLLS_DIR = os.path.join(BASE_DIR, "rolls")
 
 def build_subfolder_index(folder_path, folder_name):
-    """如果子胶片文件夹内没有 index.html，自动生成一个展示 images 目录下所有图片的 index.html"""
     sub_index_path = os.path.join(folder_path, "index.html")
     img_dir = os.path.join(folder_path, "images")
     
-    # 兼容处理：如果没有 images 文件夹，但当前目录下有图片，自动创建 images 文件夹并把图片移进去
+    # 确保 images 文件夹存在，并把根下的图片移入
     if not os.path.exists(img_dir):
         os.makedirs(img_dir)
-        for f in os.listdir(folder_path):
-            if f.lower().endswith(('.jpg', '.jpeg', '.png', '.webp')):
-                shutil.move(os.path.join(folder_path, f), os.path.join(img_dir, f))
     
-    # 获取 images 目录下的所有图片文件名
-    images = [f for f in os.listdir(img_dir) if f.lower().endswith(('.jpg', '.jpeg', '.png', '.webp'))]
+    for f in os.listdir(folder_path):
+        if f.lower().endswith(('.jpg', '.jpeg', '.png', '.webp', '.gif')):
+            shutil.move(os.path.join(folder_path, f), os.path.join(img_dir, f))
+    
+    # 自动扫描 images 文件夹内所有图片
+    images = [f for f in os.listdir(img_dir) if f.lower().endswith(('.jpg', '.jpeg', '.png', '.webp', '.gif'))]
     images.sort()
     
-    # 动态生成图片标签
-    img_tags = "\n".join([f'    <img src="./images/{img}" loading="lazy">' for img in images])
-    
+    # 构建 JS 格式的图片数组字符串
+    js_image_list = ",\n".join([f'  "images/{img}"' for img in images])
+
     sub_html_content = f'''<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>{folder_name}</title>
+
 <style>
-body {{ margin: 0; background: #111; color: #ddd; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; text-align: center; }}
-h1 {{ font-size: 18px; margin: 20px 0; font-weight: 500; color: #eee; }}
-.gallery {{ display: flex; flex-direction: column; align-items: center; gap: 16px; padding: 0 10px 40px; }}
-.gallery img {{ max-width: 100%; width: auto; max-height: 90vh; border-radius: 2px; box-shadow: 0 4px 12px rgba(0,0,0,0.5); }}
-a.back {{ display: inline-block; margin: 15px 0; color: #888; text-decoration: none; font-size: 13px; }}
-a.back:hover {{ color: #fff; }}
+body {{
+  margin: 0;
+  background: #111;
+  color: #ddd;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}}
+
+h1 {{
+  text-align: center;
+  font-size: 18px;
+  margin: 14px 0 4px;
+  font-weight: 500;
+}}
+
+.intro {{
+  text-align: center;
+  font-size: 11px;
+  color: #777;
+  margin-bottom: 4px;
+}}
+
+.meta {{
+  text-align: center;
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 12px;
+}}
+
+.gallery {{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 6px;
+  padding: 6px;
+}}
+
+.gallery img {{
+  width: 100%;
+  display: block;
+  cursor: pointer;
+  background: #1a1a1a;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.4);
+  user-select: none;
+  -webkit-touch-callout: none;
+}}
+
+.gallery img:hover {{
+  transform: scale(1.02);
+  opacity: 0.9;
+}}
+
+.viewer {{
+  position: fixed;
+  inset: 0;
+  background: #0b0b0b;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}}
+
+.viewer.active {{
+  display: flex;
+  cursor: none;
+}}
+
+.viewer img {{
+  max-width: 95%;
+  max-height: 95%;
+  box-shadow: 0 0 30px rgba(0,0,0,0.6);
+}}
+
+.frame {{
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-size: 12px;
+  color: #aaa;
+}}
+
+.back-link {{
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  font-size: 12px;
+  color: #777;
+  text-decoration: none;
+}}
+.back-link:hover {{ color: #ccc; }}
 </style>
 </head>
+
 <body>
-<a class="back" href="../">← Back to Rolls Index</a>
+
+<a class="back-link" href="../">← Index</a>
 <h1>{folder_name}</h1>
-<div class="gallery">
-{img_tags}
+<p class="intro">Tap to view · Swipe / Click to browse</p>
+<p class="meta">Roll Archive</p>
+
+<div class="gallery" id="gallery"></div>
+
+<div class="viewer" id="viewer">
+  <div class="frame" id="frame"></div>
+  <img id="viewerImg">
 </div>
+
+<script>
+const images = [
+{js_image_list}
+];
+
+const gallery = document.getElementById("gallery");
+const viewer = document.getElementById("viewer");
+const viewerImg = document.getElementById("viewerImg");
+const frame = document.getElementById("frame");
+
+let current = 0;
+
+images.forEach((src, i) => {{
+  const img = document.createElement("img");
+  img.src = src;
+  img.loading = "lazy";
+  img.onerror = () => img.style.opacity = 0.3;
+  img.onclick = () => showImage(i);
+  gallery.appendChild(img);
+}});
+
+function showImage(i) {{
+  current = i;
+  viewerImg.src = images[i];
+  frame.textContent = String(i + 1).padStart(3, "0");
+  viewer.classList.add("active");
+}}
+
+viewer.onclick = () => viewer.classList.remove("active");
+
+document.addEventListener("keydown", e => {{
+  if (!viewer.classList.contains("active")) return;
+  if (e.key === "ArrowRight") showImage((current + 1) % images.length);
+  if (e.key === "ArrowLeft") showImage((current - 1 + images.length) % images.length);
+  if (e.key === "Escape") viewer.classList.remove("active");
+}});
+</script>
+
 </body>
 </html>'''
 
-    # 如果原文件夹没有 index.html，就写入新生成的
-    if not os.path.exists(sub_index_path):
-        with open(sub_index_path, "w", encoding="utf-8") as f:
-            f.write(sub_html_content)
-        print(f"✨ 已为 [{folder_name}] 自动生成子网页 index.html")
+    # 为缺失或需要刷新的子页面重写 index.html
+    with open(sub_index_path, "w", encoding="utf-8") as f:
+        f.write(sub_html_content)
 
 def run():
     if not os.path.exists(ROLLS_DIR):
         os.makedirs(ROLLS_DIR)
 
-    # 1. 自动归档根目录下的胶片文件夹
+    # 自动移动外层胶片目录
     for item in os.listdir(BASE_DIR):
         item_path = os.path.join(BASE_DIR, item)
         if os.path.isdir(item_path) and item not in ["rolls", ".git", ".vscode"]:
             target_path = os.path.join(ROLLS_DIR, item)
             shutil.move(item_path, target_path)
-            print(f"📁 已归档胶片: {item}")
+            print(f"📁 归档新胶片: {item}")
 
-    # 2. 遍历 rolls 文件夹，补齐各卷的 index.html，并更新主 index.html
     folders = [f for f in os.listdir(ROLLS_DIR) if os.path.isdir(os.path.join(ROLLS_DIR, f))]
     
     for folder in folders:
@@ -113,7 +241,7 @@ h1 {{ text-align: center; font-size: 18px; margin: 16px 0 6px; font-weight: 500;
     with open(target_index, "w", encoding="utf-8") as f:
         f.write(main_html_content)
 
-    print("\n🎉 处理完毕！`rolls/index.html` 及各子页面均已就绪！")
+    print("\n✅ 所有胶片卷的 `index.html` 网页重新自动构建完成！")
 
 if __name__ == "__main__":
     try:
