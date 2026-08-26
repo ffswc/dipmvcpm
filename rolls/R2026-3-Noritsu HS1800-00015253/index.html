@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>R2026-3-Noritsu HS1800-00015253</title>
+
+<style>
+body {
+  margin: 0;
+  background: #111;
+  color: #ddd;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+h1 {
+  text-align: center;
+  font-size: 18px;
+  margin: 14px 0 4px;
+  font-weight: 500;
+}
+
+.intro {
+  text-align: center;
+  font-size: 11px;
+  color: #777;
+  margin-bottom: 4px;
+}
+
+.meta {
+  text-align: center;
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 12px;
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 6px;
+  padding: 6px;
+}
+
+.gallery img {
+  width: 100%;
+  display: block;
+  cursor: pointer;
+  background: #1a1a1a;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.4);
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+
+.gallery img:hover {
+  transform: scale(1.02);
+  opacity: 0.9;
+}
+
+.viewer {
+  position: fixed;
+  inset: 0;
+  background: #0b0b0b;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.viewer.active {
+  display: flex;
+  cursor: none;
+}
+
+.viewer img {
+  max-width: 95%;
+  max-height: 95%;
+  box-shadow: 0 0 30px rgba(0,0,0,0.6);
+}
+
+.frame {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-size: 12px;
+  color: #aaa;
+}
+
+.back-link {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  font-size: 12px;
+  color: #777;
+  text-decoration: none;
+}
+.back-link:hover { color: #ccc; }
+</style>
+</head>
+
+<body>
+
+<a class="back-link" href="../">← Index</a>
+<h1>R2026-3-Noritsu HS1800-00015253</h1>
+<p class="intro">Tap to view · Swipe / Click to browse</p>
+<p class="meta">Roll Archive</p>
+
+<div class="gallery" id="gallery"></div>
+
+<div class="viewer" id="viewer">
+  <div class="frame" id="frame"></div>
+  <img id="viewerImg">
+</div>
+
+<script>
+const images = [
+  "images/000152530001.jpg",
+  "images/000152530002.jpg",
+  "images/000152530003.jpg",
+  "images/000152530004.jpg",
+  "images/000152530005.jpg",
+  "images/000152530006.jpg",
+  "images/000152530007.jpg",
+  "images/000152530008.jpg",
+  "images/000152530009.jpg",
+  "images/000152530010.jpg",
+  "images/000152530011.jpg",
+  "images/000152530012.jpg",
+  "images/000152530013.jpg",
+  "images/000152530014.jpg",
+  "images/000152530015.jpg",
+  "images/000152530016.jpg",
+  "images/000152530017.jpg",
+  "images/000152530018.jpg",
+  "images/000152530019.jpg",
+  "images/000152530020.jpg",
+  "images/000152530021.jpg",
+  "images/000152530022.jpg",
+  "images/000152530023.jpg",
+  "images/000152530024.jpg",
+  "images/000152530025.jpg",
+  "images/000152530026.jpg",
+  "images/000152530027.jpg",
+  "images/000152530028.jpg",
+  "images/000152530029.jpg"
+];
+
+const gallery = document.getElementById("gallery");
+const viewer = document.getElementById("viewer");
+const viewerImg = document.getElementById("viewerImg");
+const frame = document.getElementById("frame");
+
+let current = 0;
+
+images.forEach((src, i) => {
+  const img = document.createElement("img");
+  img.src = src;
+  img.loading = "lazy";
+  img.onerror = () => img.style.opacity = 0.3;
+  img.onclick = () => showImage(i);
+  gallery.appendChild(img);
+});
+
+function showImage(i) {
+  current = i;
+  viewerImg.src = images[i];
+  frame.textContent = String(i + 1).padStart(3, "0");
+  viewer.classList.add("active");
+}
+
+viewer.onclick = () => viewer.classList.remove("active");
+
+document.addEventListener("keydown", e => {
+  if (!viewer.classList.contains("active")) return;
+  if (e.key === "ArrowRight") showImage((current + 1) % images.length);
+  if (e.key === "ArrowLeft") showImage((current - 1 + images.length) % images.length);
+  if (e.key === "Escape") viewer.classList.remove("active");
+});
+</script>
+
+</body>
+</html>
