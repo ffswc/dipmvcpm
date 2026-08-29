@@ -6,86 +6,44 @@
 <title>Film Rolls Index</title>
 <style>
 body { margin: 0; background: #111; color: #ddd; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
-h1 { text-align: center; font-size: 18px; margin: 16px 0 6px; font-weight: 500; }
-.note { text-align: center; font-size: 12px; color: #777; margin-bottom: 14px; }
-.list { max-width: 720px; margin: 0 auto; padding: 0 10px 30px; }
-.roll { display: flex; justify-content: space-between; align-items: center; padding: 12px 10px; border-bottom: 1px solid #222; text-decoration: none; color: #ddd; }
+.header { display: flex; justify-content: space-between; align-items: center; max-width: 720px; margin: 24px auto 0; padding: 0 16px; }
+.title-group { flex-grow: 1; }
+h1 { font-size: 20px; margin: 0; font-weight: 500; letter-spacing: 0.5px; }
+.note { font-size: 11px; color: #666; margin-top: 2px; }
+.letters-btn { font-size: 12px; color: #aaa; text-decoration: none; border: 1px solid #333; padding: 5px 12px; border-radius: 4px; transition: all 0.2s; }
+.letters-btn:hover { color: #fff; border-color: #666; background: #1a1a1a; }
+.list { max-width: 720px; margin: 20px auto 0; padding: 0 10px 30px; }
+.roll { display: flex; justify-content: space-between; align-items: center; padding: 14px 10px; border-bottom: 1px solid #222; text-decoration: none; color: #ddd; }
 .roll:hover { background: #181818; }
 .roll span { font-size: 14px; letter-spacing: 0.3px; }
 .roll small { font-size: 11px; color: #888; }
 </style>
 </head>
 <body>
-
-<h1>Film Rolls</h1>
-<div class="note">Noritsu HS1800 · Roll Archive</div>
-
-<div class="list">
-  <a class="roll" href="./R2026-8-Nikon-5000e-3/">
-    <span>R2026-8-Nikon-5000e-3</span>
-    <small>Roll</small>
-  </a>
-  <a class="roll" href="./R2026-8-Nikon-5000e-2/">
-    <span>R2026-8-Nikon-5000e-2</span>
-    <small>Roll</small>
-  </a>
-  <a class="roll" href="./R2026-8-Nikon-5000e-1/">
-    <span>R2026-8-Nikon-5000e-1</span>
-    <small>Roll</small>
-  </a>
-  <a class="roll" href="./R2026-3-Noritsu HS1800-00015254/">
-    <span>R2026-3-Noritsu HS1800-00015254</span>
-    <small>Roll</small>
-  </a>
-  <a class="roll" href="./R2026-3-Noritsu HS1800-00015253/">
-    <span>R2026-3-Noritsu HS1800-00015253</span>
-    <small>Roll</small>
-  </a>
-  <a class="roll" href="./R2026-1-09/">
-    <span>R2026-1-09</span>
-    <small>Roll</small>
-  </a>
-  <a class="roll" href="./R2025-5-Noritsu HS1800-34817/">
-    <span>R2025-5-Noritsu HS1800-34817</span>
-    <small>Roll</small>
-  </a>
-  <a class="roll" href="./R2025-5-Noritsu HS1800-34816/">
-    <span>R2025-5-Noritsu HS1800-34816</span>
-    <small>Roll</small>
-  </a>
-  <a class="roll" href="./R2025-5-Noritsu HS1800-34815/">
-    <span>R2025-5-Noritsu HS1800-34815</span>
-    <small>Roll</small>
-  </a>
-  <a class="roll" href="./R2025-5-Noritsu HS1800-34814/">
-    <span>R2025-5-Noritsu HS1800-34814</span>
-    <small>Roll</small>
-  </a>
-  <a class="roll" href="./R2025-11-Noritsu HS1800-50416/">
-    <span>R2025-11-Noritsu HS1800-50416</span>
-    <small>Roll</small>
-  </a>
-  <a class="roll" href="./R2025-11-Noritsu HS1800-50415/">
-    <span>R2025-11-Noritsu HS1800-50415</span>
-    <small>Roll</small>
-  </a>
-  <a class="roll" href="./R2025-11-Noritsu HS1800-46425/">
-    <span>R2025-11-Noritsu HS1800-46425</span>
-    <small>Roll</small>
-  </a>
-  <a class="roll" href="./R2025-11-Noritsu HS1800-46424/">
-    <span>R2025-11-Noritsu HS1800-46424</span>
-    <small>Roll</small>
-  </a>
-  <a class="roll" href="./R2025-11-Noritsu HS1800-46423/">
-    <span>R2025-11-Noritsu HS1800-46423</span>
-    <small>Roll</small>
-  </a>
-  <a class="roll" href="./R2025-11-Noritsu HS1800-46422/">
-    <span>R2025-11-Noritsu HS1800-46422</span>
-    <small>Roll</small>
-  </a>
+<div class="header">
+  <div class="title-group">
+    <h1>Film Rolls</h1>
+    <div class="note">Noritsu HS1800 · Roll Archive</div>
+  </div>
+  <a class="letters-btn" href="../letters/index.html">✉ Letters</a>
 </div>
-
+<div class="list">
+  <a class="roll" href="./R2026-8-Nikon-5000e-3/"><span>R2026-8-Nikon-5000e-3</span><small>Roll</small></a>
+  <a class="roll" href="./R2026-8-Nikon-5000e-2/"><span>R2026-8-Nikon-5000e-2</span><small>Roll</small></a>
+  <a class="roll" href="./R2026-8-Nikon-5000e-1/"><span>R2026-8-Nikon-5000e-1</span><small>Roll</small></a>
+  <a class="roll" href="./R2026-3-Noritsu HS1800-00015254/"><span>R2026-3-Noritsu HS1800-00015254</span><small>Roll</small></a>
+  <a class="roll" href="./R2026-3-Noritsu HS1800-00015253/"><span>R2026-3-Noritsu HS1800-00015253</span><small>Roll</small></a>
+  <a class="roll" href="./R2026-1-09/"><span>R2026-1-09</span><small>Roll</small></a>
+  <a class="roll" href="./R2025-5-Noritsu HS1800-34817/"><span>R2025-5-Noritsu HS1800-34817</span><small>Roll</small></a>
+  <a class="roll" href="./R2025-5-Noritsu HS1800-34816/"><span>R2025-5-Noritsu HS1800-34816</span><small>Roll</small></a>
+  <a class="roll" href="./R2025-5-Noritsu HS1800-34815/"><span>R2025-5-Noritsu HS1800-34815</span><small>Roll</small></a>
+  <a class="roll" href="./R2025-5-Noritsu HS1800-34814/"><span>R2025-5-Noritsu HS1800-34814</span><small>Roll</small></a>
+  <a class="roll" href="./R2025-11-Noritsu HS1800-50416/"><span>R2025-11-Noritsu HS1800-50416</span><small>Roll</small></a>
+  <a class="roll" href="./R2025-11-Noritsu HS1800-50415/"><span>R2025-11-Noritsu HS1800-50415</span><small>Roll</small></a>
+  <a class="roll" href="./R2025-11-Noritsu HS1800-46425/"><span>R2025-11-Noritsu HS1800-46425</span><small>Roll</small></a>
+  <a class="roll" href="./R2025-11-Noritsu HS1800-46424/"><span>R2025-11-Noritsu HS1800-46424</span><small>Roll</small></a>
+  <a class="roll" href="./R2025-11-Noritsu HS1800-46423/"><span>R2025-11-Noritsu HS1800-46423</span><small>Roll</small></a>
+  <a class="roll" href="./R2025-11-Noritsu HS1800-46422/"><span>R2025-11-Noritsu HS1800-46422</span><small>Roll</small></a>
+</div>
 </body>
 </html>

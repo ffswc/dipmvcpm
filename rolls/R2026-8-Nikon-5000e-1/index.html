@@ -4,117 +4,108 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>R2026-8-Nikon-5000e-1</title>
-
 <style>
-body {
-  margin: 0;
-  background: #111;
-  color: #ddd;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-}
-
+body { margin: 0; background: #111; color: #ddd; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
 h1 { text-align: center; font-size: 18px; margin: 14px 0 4px; font-weight: 500; }
 .intro { text-align: center; font-size: 11px; color: #777; margin-bottom: 4px; }
 .meta { text-align: center; font-size: 12px; color: #666; margin-bottom: 12px; }
-
-.gallery {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
-  gap: 6px;
-  padding: 6px;
-}
-
-.gallery img {
-  width: 100%;
-  display: block;
-  cursor: pointer;
-  background: #1a1a1a;
-  transition: transform 0.15s ease, opacity 0.15s ease;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.4);
-  user-select: none;
-  -webkit-touch-callout: none;
-}
-
+.gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 6px; padding: 6px; }
+.gallery img { width: 100%; display: block; cursor: pointer; background: #1a1a1a; transition: transform 0.15s ease, opacity 0.15s ease; box-shadow: 0 1px 4px rgba(0,0,0,0.4); user-select: none; }
 .gallery img:hover { transform: scale(1.02); opacity: 0.9; }
-
-.viewer {
-  position: fixed;
-  inset: 0;
-  background: #0b0b0b;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 999;
-}
-
+.viewer { position: fixed; inset: 0; background: #0b0b0b; display: none; align-items: center; justify-content: center; z-index: 999; }
 .viewer.active { display: flex; cursor: none; }
 .viewer img { max-width: 95%; max-height: 95%; box-shadow: 0 0 30px rgba(0,0,0,0.6); }
-
 .frame { position: absolute; top: 12px; right: 12px; font-size: 12px; color: #aaa; }
 .back-link { position: absolute; top: 12px; left: 12px; font-size: 12px; color: #777; text-decoration: none; }
 .back-link:hover { color: #ccc; }
 </style>
 </head>
-
 <body>
-
 <a class="back-link" href="../">← Index</a>
 <h1>R2026-8-Nikon-5000e-1</h1>
 <p class="intro">Tap to view · Swipe / Click to browse</p>
 <p class="meta">Roll Archive</p>
-
 <div class="gallery" id="gallery"></div>
-
 <div class="viewer" id="viewer">
   <div class="frame" id="frame"></div>
   <img id="viewerImg" decoding="async">
 </div>
-
 <script>
 const images = [
   "images/35300101.webp",
+  "images/35300101.webp",
+  "images/35300103.webp",
   "images/35300103.webp",
   "images/35300201.webp",
+  "images/35300201.webp",
+  "images/35300203.webp",
   "images/35300203.webp",
   "images/35300301.webp",
+  "images/35300301.webp",
+  "images/35300303.webp",
   "images/35300303.webp",
   "images/35300401.webp",
+  "images/35300401.webp",
+  "images/35300403.webp",
   "images/35300403.webp",
   "images/35300501.webp",
+  "images/35300501.webp",
+  "images/35300503.webp",
   "images/35300503.webp",
   "images/35300601.webp",
+  "images/35300601.webp",
+  "images/35300603.webp",
   "images/35300603.webp",
   "images/35300701.webp",
+  "images/35300701.webp",
+  "images/35300703.webp",
   "images/35300703.webp",
   "images/35300801.webp",
+  "images/35300801.webp",
+  "images/35300803.webp",
   "images/35300803.webp",
   "images/35300901.webp",
+  "images/35300901.webp",
+  "images/35300903.webp",
   "images/35300903.webp",
   "images/35301001.webp",
+  "images/35301001.webp",
+  "images/35301003.webp",
   "images/35301003.webp",
   "images/35301101.webp",
+  "images/35301101.webp",
+  "images/35301103.webp",
   "images/35301103.webp",
   "images/35301201.webp",
+  "images/35301201.webp",
+  "images/35301203.webp",
   "images/35301203.webp",
   "images/35301301.webp",
+  "images/35301301.webp",
+  "images/35301303.webp",
   "images/35301303.webp",
   "images/35301401.webp",
+  "images/35301401.webp",
+  "images/35301403.webp",
   "images/35301403.webp",
   "images/35301501.webp",
+  "images/35301501.webp",
+  "images/35301503.webp",
   "images/35301503.webp",
   "images/35301601.webp",
+  "images/35301601.webp",
+  "images/35301603.webp",
   "images/35301603.webp",
   "images/35301703.webp",
+  "images/35301703.webp",
+  "images/35301803.webp",
   "images/35301803.webp"
 ];
-
 const gallery = document.getElementById("gallery");
 const viewer = document.getElementById("viewer");
 const viewerImg = document.getElementById("viewerImg");
 const frame = document.getElementById("frame");
-
 let current = 0;
-
 images.forEach((src, i) => {
   const img = document.createElement("img");
   img.src = src;
@@ -124,16 +115,13 @@ images.forEach((src, i) => {
   img.onclick = () => showImage(i);
   gallery.appendChild(img);
 });
-
 function showImage(i) {
   current = i;
   viewerImg.src = images[i];
   frame.textContent = String(i + 1).padStart(3, "0");
   viewer.classList.add("active");
 }
-
 viewer.onclick = () => viewer.classList.remove("active");
-
 document.addEventListener("keydown", e => {
   if (!viewer.classList.contains("active")) return;
   if (e.key === "ArrowRight") showImage((current + 1) % images.length);
@@ -141,6 +129,5 @@ document.addEventListener("keydown", e => {
   if (e.key === "Escape") viewer.classList.remove("active");
 });
 </script>
-
 </body>
 </html>

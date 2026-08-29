@@ -4,84 +4,78 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>R2025-11-Noritsu HS1800-50415</title>
-
 <style>
-body {
-  margin: 0;
-  background: #111;
-  color: #ddd;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-}
-
+body { margin: 0; background: #111; color: #ddd; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
 h1 { text-align: center; font-size: 18px; margin: 14px 0 4px; font-weight: 500; }
 .intro { text-align: center; font-size: 11px; color: #777; margin-bottom: 4px; }
 .meta { text-align: center; font-size: 12px; color: #666; margin-bottom: 12px; }
-
-.gallery {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
-  gap: 6px;
-  padding: 6px;
-}
-
-.gallery img {
-  width: 100%;
-  display: block;
-  cursor: pointer;
-  background: #1a1a1a;
-  transition: transform 0.15s ease, opacity 0.15s ease;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.4);
-  user-select: none;
-  -webkit-touch-callout: none;
-}
-
+.gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 6px; padding: 6px; }
+.gallery img { width: 100%; display: block; cursor: pointer; background: #1a1a1a; transition: transform 0.15s ease, opacity 0.15s ease; box-shadow: 0 1px 4px rgba(0,0,0,0.4); user-select: none; }
 .gallery img:hover { transform: scale(1.02); opacity: 0.9; }
-
-.viewer {
-  position: fixed;
-  inset: 0;
-  background: #0b0b0b;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 999;
-}
-
+.viewer { position: fixed; inset: 0; background: #0b0b0b; display: none; align-items: center; justify-content: center; z-index: 999; }
 .viewer.active { display: flex; cursor: none; }
 .viewer img { max-width: 95%; max-height: 95%; box-shadow: 0 0 30px rgba(0,0,0,0.6); }
-
 .frame { position: absolute; top: 12px; right: 12px; font-size: 12px; color: #aaa; }
 .back-link { position: absolute; top: 12px; left: 12px; font-size: 12px; color: #777; text-decoration: none; }
 .back-link:hover { color: #ccc; }
 </style>
 </head>
-
 <body>
-
 <a class="back-link" href="../">← Index</a>
 <h1>R2025-11-Noritsu HS1800-50415</h1>
 <p class="intro">Tap to view · Swipe / Click to browse</p>
 <p class="meta">Roll Archive</p>
-
 <div class="gallery" id="gallery"></div>
-
 <div class="viewer" id="viewer">
   <div class="frame" id="frame"></div>
   <img id="viewerImg" decoding="async">
 </div>
-
 <script>
 const images = [
-
+  "images/001.webp",
+  "images/002.webp",
+  "images/003.webp",
+  "images/004.webp",
+  "images/005.webp",
+  "images/006.webp",
+  "images/007.webp",
+  "images/008.webp",
+  "images/009.webp",
+  "images/010.webp",
+  "images/011.webp",
+  "images/012.webp",
+  "images/013.webp",
+  "images/014.webp",
+  "images/015.webp",
+  "images/016.webp",
+  "images/017.webp",
+  "images/018.webp",
+  "images/019.webp",
+  "images/020.webp",
+  "images/021.webp",
+  "images/022.webp",
+  "images/023.webp",
+  "images/024.webp",
+  "images/025.webp",
+  "images/026.webp",
+  "images/027.webp",
+  "images/028.webp",
+  "images/029.webp",
+  "images/030.webp",
+  "images/031.webp",
+  "images/032.webp",
+  "images/033.webp",
+  "images/034.webp",
+  "images/035.webp",
+  "images/036.webp",
+  "images/037.webp",
+  "images/038.webp"
 ];
-
 const gallery = document.getElementById("gallery");
 const viewer = document.getElementById("viewer");
 const viewerImg = document.getElementById("viewerImg");
 const frame = document.getElementById("frame");
-
 let current = 0;
-
 images.forEach((src, i) => {
   const img = document.createElement("img");
   img.src = src;
@@ -91,16 +85,13 @@ images.forEach((src, i) => {
   img.onclick = () => showImage(i);
   gallery.appendChild(img);
 });
-
 function showImage(i) {
   current = i;
   viewerImg.src = images[i];
   frame.textContent = String(i + 1).padStart(3, "0");
   viewer.classList.add("active");
 }
-
 viewer.onclick = () => viewer.classList.remove("active");
-
 document.addEventListener("keydown", e => {
   if (!viewer.classList.contains("active")) return;
   if (e.key === "ArrowRight") showImage((current + 1) % images.length);
@@ -108,6 +99,5 @@ document.addEventListener("keydown", e => {
   if (e.key === "Escape") viewer.classList.remove("active");
 });
 </script>
-
 </body>
 </html>
