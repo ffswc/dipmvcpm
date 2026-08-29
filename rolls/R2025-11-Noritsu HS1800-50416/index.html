@@ -2,47 +2,37 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>R2025-11-Noritsu HS1800-50416</title>
 <style>
-* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-body { margin: 0; background: #0c0c0c; color: #a0a0a0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; min-height: 100vh; }
-.nav { padding: 20px; display: flex; justify-content: space-between; align-items: center; max-width: 1000px; margin: 0 auto; }
-.back-link { font-size: 13px; color: #666; text-decoration: none; letter-spacing: 1px; }
-header { text-align: center; margin: 10px 0 30px; padding: 0 20px; }
-h1 { font-size: 20px; font-weight: 400; color: #eee; margin: 0 0 6px; word-break: break-all; }
-.meta { font-size: 11px; color: #444; font-family: monospace; letter-spacing: 1px; }
-
-/* 响应式网格：手机默认 2 列大图，屏幕变宽后自动增加列数 */
-.gallery { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; padding: 0 12px 60px; max-width: 1000px; margin: 0 auto; }
-@media (min-width: 600px) {
-  .gallery { grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 0 20px 60px; }
-}
-@media (min-width: 900px) {
-  .gallery { grid-template-columns: repeat(4, 1fr); gap: 16px; }
-}
-
-.gallery img { width: 100%; aspect-ratio: 1; object-fit: cover; display: block; cursor: pointer; background: #161616; border-radius: 3px; opacity: 0.95; }
-
-.viewer { position: fixed; inset: 0; background: rgba(0,0,0,0.96); display: none; align-items: center; justify-content: center; z-index: 999; touch-action: manipulation; }
-.viewer.active { display: flex; }
-.viewer img { max-width: 95vw; max-height: 85vh; border-radius: 2px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); object-fit: contain; }
-.frame { position: absolute; bottom: 20px; font-size: 12px; color: #666; font-family: monospace; }
+body { margin: 0; background: #111; color: #ddd; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+h1 { text-align: center; font-size: 18px; margin: 14px 0 4px; font-weight: 500; }
+.intro { text-align: center; font-size: 11px; color: #777; margin-bottom: 4px; }
+.meta { text-align: center; font-size: 12px; color: #666; margin-bottom: 12px; }
+.gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 6px; padding: 6px; }
+.gallery img { width: 100%; display: block; cursor: pointer; background: #1a1a1a; transition: transform 0.15s ease, opacity 0.15s ease; box-shadow: 0 1px 4px rgba(0,0,0,0.4); user-select: none; -webkit-touch-callout: none; }
+.gallery img:hover { transform: scale(1.02); opacity: 0.9; }
+.viewer { position: fixed; inset: 0; background: #0b0b0b; display: none; align-items: center; justify-content: center; z-index: 999; }
+.viewer.active { display: flex; cursor: none; }
+.viewer img { max-width: 95%; max-height: 95%; box-shadow: 0 0 30px rgba(0,0,0,0.6); }
+.frame { position: absolute; top: 12px; right: 12px; font-size: 12px; color: #aaa; }
+.back-link { position: absolute; top: 12px; left: 12px; font-size: 12px; color: #777; text-decoration: none; }
+.back-link:hover { color: #ccc; }
 </style>
 </head>
 <body>
-<div class="nav"><a class="back-link" href="../">← INDEX</a></div>
-<header>
-  <h1>R2025-11-Noritsu HS1800-50416</h1>
-  <div class="meta">68 FRAMES · NORITSU HS1800</div>
-</header>
+<a class="back-link" href="../">← Index</a>
+<h1>R2025-11-Noritsu HS1800-50416</h1>
+<p class="intro">Tap to view · Swipe / Click to browse</p>
+<p class="meta">Roll Archive</p>
 <div class="gallery" id="gallery"></div>
 <div class="viewer" id="viewer">
-  <img id="viewerImg">
   <div class="frame" id="frame"></div>
+  <img id="viewerImg" decoding="async">
 </div>
 <script>
-const images = [  "images/001.webp",
+const images = [
+  "images/001.webp",
   "images/001.webp",
   "images/002.webp",
   "images/002.webp",
@@ -109,7 +99,8 @@ const images = [  "images/001.webp",
   "images/033.webp",
   "images/033.webp",
   "images/034.webp",
-  "images/034.webp"];
+  "images/034.webp"
+];
 const gallery = document.getElementById("gallery");
 const viewer = document.getElementById("viewer");
 const viewerImg = document.getElementById("viewerImg");
@@ -117,13 +108,17 @@ const frame = document.getElementById("frame");
 let current = 0;
 images.forEach((src, i) => {
   const img = document.createElement("img");
-  img.src = src; img.loading = "lazy";
+  img.src = src;
+  img.loading = "lazy";
+  img.decoding = "async";
+  img.onerror = () => img.style.opacity = 0.3;
   img.onclick = () => showImage(i);
   gallery.appendChild(img);
 });
 function showImage(i) {
-  current = i; viewerImg.src = images[i];
-  frame.textContent = `${String(i + 1).padStart(2, '0')} / ${String(images.length).padStart(2, '0')}`;
+  current = i;
+  viewerImg.src = images[i];
+  frame.textContent = String(i + 1).padStart(3, "0");
   viewer.classList.add("active");
 }
 viewer.onclick = () => viewer.classList.remove("active");
